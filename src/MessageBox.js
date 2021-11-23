@@ -5,7 +5,7 @@ import firebase from './firebase.js';
 
 const MessageBox = function (prop) {
     // just the message itself
-    const [currentUser, setCurrentUser] = useState(localStorage.getItem('username'))
+    const currentUser = localStorage.getItem('username');
     const [userMessage, setUserMessage] = useState('')
     const messagesEndRef = useRef(null)
 

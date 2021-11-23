@@ -50,7 +50,7 @@ const SignUp = (prop) => {
        localStorage.setItem("username", userObject.username)
        setCurrentUser(localStorage.getItem('username'))
 
-       return prop.setResetPage('Please rerender')
+       return prop.setResetPage(true)
         
     }
     return(

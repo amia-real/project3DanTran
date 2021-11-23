@@ -8,12 +8,12 @@ import Login from './Login.js';
 // New ERROR : find a way to rerender the page when someone logs in or creates a user so they can display the good stuff.
 
 function App() {
-    const [resetPage, setResetPage] = useState('')
+    const [resetPage, setResetPage] = useState(false)
     const [whichLoginPage, setWhichLoginPage] = useState('')
     const handleLogOut = (e) => {
       e.preventDefault()
       localStorage.removeItem('username')
-      setResetPage('plz work brooo')
+      setResetPage(false)
       setWhichLoginPage('')
     }
     
@@ -60,21 +60,16 @@ function App() {
         
         : !localStorage.getItem('username') && whichLoginPage === 'Sign In Page'
         ? <SignUp setResetPage = {setResetPage}/>
+        : null
+        // localStorage.getItem('username')
         
-        : localStorage.getItem('username')
-        ? <>
-            {/* <header>
-              <h1>Hello, {localStorage.getItem('username')}</h1>
-              <button onClick={handleLogOut}>Log Out</button>
-            </header> */}
-            <CreateChatRoom/> 
-
-          </>
-        : <>
-            <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
-          </>
+        // : <>
+        //     <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
+        //   </>
         }
+        {resetPage === false && whichLoginPage === '' && (<h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>)}
         
+        {resetPage === true && <CreateChatRoom/> }
         
         {/* <SignUp/>
   

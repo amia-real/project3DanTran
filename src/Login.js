@@ -38,7 +38,7 @@ const Login = (prop) => {
                     localStorage.setItem('username', data[object].username)
                     
                     setCurrentUser(localStorage.getItem('username'))
-                    return prop.setResetPage('Please reset homie')
+                    return prop.setResetPage(true)
                 }
             }
             return setError('username and password do not match')
