@@ -1,7 +1,6 @@
 import './App.css'
-import {useState, useEffect} from 'react';
-import firebase from './firebase.js';
-import MessageBox from './MessageBox.js';
+import {useState} from 'react';
+
 import CreateChatRoom from './ChatRoom.js';
 import SignUp from './Users.js';
 import Login from './Login.js';
@@ -59,20 +58,20 @@ function App() {
         ? <Login setResetPage = {setResetPage}/>
            
         
-        : !localStorage.getItem('username') && whichLoginPage == 'Sign In Page'
+        : !localStorage.getItem('username') && whichLoginPage === 'Sign In Page'
         ? <SignUp setResetPage = {setResetPage}/>
         
         : localStorage.getItem('username')
         ? <>
-            <header>
+            {/* <header>
               <h1>Hello, {localStorage.getItem('username')}</h1>
               <button onClick={handleLogOut}>Log Out</button>
-            </header>
+            </header> */}
             <CreateChatRoom/> 
 
           </>
         : <>
-            <h1>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h1>
+            <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
           </>
         }
         

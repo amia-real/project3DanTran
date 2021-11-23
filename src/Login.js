@@ -1,10 +1,10 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import firebase from './firebase.js';
 
 const Login = (prop) => {
     const [userUsername, setUserUsername] = useState('')
     const [userPassword, setUserPassword] = useState('')
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [currentUser, setCurrentUser] = useState(localStorage.getItem('username'))
 
@@ -53,7 +53,7 @@ const Login = (prop) => {
                 <input required id='username' type="text" value={userUsername} onChange={handleUsernameChange} />
                 <label htmlFor="password">Password</label>
                 <input required id='password' type='password' value={userPassword} onChange={handlePasswordChange}/>
-                <button disabled={loading} >Sign In</button>
+                <button>Sign In</button>
             </form>
         </>
     )

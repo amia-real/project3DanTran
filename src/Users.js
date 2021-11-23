@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import firebase from './firebase.js';
 // import { useAuth } from './AuthContext.js';
 
@@ -7,7 +7,7 @@ const SignUp = (prop) => {
     const [userUsername, setUserUsername] = useState('')
     const [userPassword, setUserPassword] = useState('')
     const [userConfirmPassword, setUserConfirmPassword] = useState('')
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [currentUser, setCurrentUser] = useState(localStorage.getItem('username'))
     // const {signup} = useAuth()
@@ -66,7 +66,7 @@ const SignUp = (prop) => {
                 <input required id='password' type='password' value={userPassword} onChange={handlePasswordChange}/>
                 <label htmlFor="confirmPassword">Confirm Password</label>
                 <input required id='confirmPassword' type='password' value={userConfirmPassword} onChange={handleConfirmPasswordChange}/>
-                <button disabled={loading} >Sign Up</button>
+                <button>Sign Up</button>
             </form>
         </>
     )
