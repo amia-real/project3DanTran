@@ -14,7 +14,7 @@ const MessageBox = function (prop) {
     const [userMessage, setUserMessage] = useState('')
     const messagesEndRef = useRef(null)
 
-
+    
     // state variable to store the messages from db that need to be rendered on the page
     const [renderMessages, setRenderMessages] = useState([])
 
@@ -53,28 +53,71 @@ const MessageBox = function (prop) {
 
 
     }
-    // I want to display all of the chat logs belonging to a certain chat room
+   
     useEffect(() => {
         const dbRef = firebase.database().ref(`chatrooms/${prop.chatRoom}`)
+        const dbRef2 = firebase.database().ref('Users')
 
-
-
-        dbRef.on('value', (response) => {
+        dbRef2.on('value', (response) => {
             console.log(response.val())
-            const messageHistory = []
+
             const data = response.val()
-
-            for (let message in data) {
-                data[message].key = message
-                console.log(message)
-                console.log(data[message])
-                messageHistory.push(data[message])
+            const newArray = []
+            for (let user in data) {
+                const newObj = {
+                    user : data[user].username,
+                    avatar: data[user].avatar
+                }
+                
+                newArray.push(newObj)
+                
             }
-            setRenderMessages(messageHistory)
+            dbRef.on('value', (response) => {
+                console.log(response.val())
+                const messageHistory = []
+                const data = response.val()
+    
+                for (let message in data) {
+                    for (let i = 0; i < newArray.length; i++){
+                        if (data[message].user === newArray[i].user){
+                            data[message].avatar = newArray[i].avatar
+                        }
+                    }
+                    data[message].key = message
+                    console.log(message)
+                    console.log(data[message])
+                    messageHistory.push(data[message])
+                }
+                setRenderMessages(messageHistory)
+            })
+            
         })
-
-
+            
     }, [prop.chatRoom])
+    // I want to display all of the chat logs belonging to a certain chat room
+    // useEffect(() => {
+    //     const dbRef = firebase.database().ref(`chatrooms/${prop.chatRoom}`)
+
+    //     console.log(allUsers)
+
+    //     dbRef.on('value', (response) => {
+    //         console.log(response.val())
+    //         const messageHistory = []
+    //         const data = response.val()
+
+    //         for (let message in data) {
+    //             data[message].key = message
+    //             console.log(message)
+    //             console.log(data[message])
+    //             messageHistory.push(data[message])
+    //         }
+    //         setRenderMessages(messageHistory)
+    //     })
+
+
+    // }, [prop.chatRoom])
+
+
     const scrollToBottom = () => {
         
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -85,6 +128,7 @@ const MessageBox = function (prop) {
         scrollToBottom()
     },[renderMessages])
 
+   
 
     return (
         <div className = 'extraWrapper'>
@@ -96,10 +140,10 @@ const MessageBox = function (prop) {
                 
                     {
                         renderMessages.map((message) => {
-
+                            // findAvatarForImage(message.user)
                             // {message.user === currentUser ? return(hi) : return(bye)}  
                             return message.user === currentUser ? (
-
+                                
                                 <div key={message.key} className='messageBody2'>                                  
                                     <div className='messageContainer2'>
                                         <div className='frontPart2'>
@@ -114,9 +158,9 @@ const MessageBox = function (prop) {
 
                                 : (     <div key = {message.key} className="messageBody">
                                             <div className='profileImageContainer'>
-                                                {/* <img src={testImage} alt=""/> */}
+                                                
 
-                                                <img src={require(`./assets/profilePicturesv2/annTakamaki.png`).default} alt="" />
+                                                <img src={require(`./assets/profilePicturesv2/${message.avatar}.png`).default} alt="" />
                                                 
                                                 
                                             </div>

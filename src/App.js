@@ -9,7 +9,7 @@ import Login from './Login.js';
 
 function App() {
     // state variable to send to child components 
-    const [resetPage, setResetPage] = useState(false)
+    const [resetPage, setResetPage] = useState('')
 
     //State variable to control if showing login or sign up page
     const [whichLoginPage, setWhichLoginPage] = useState('')
@@ -20,6 +20,7 @@ function App() {
       localStorage.removeItem('username')
       setResetPage(false)
       setWhichLoginPage('')
+
     }
     
     // function to handle log-in onclick event
@@ -60,17 +61,19 @@ function App() {
         
         : !localStorage.getItem('username') && whichLoginPage === 'Sign In Page'
         ? <SignUp setResetPage = {setResetPage}/>
-        : localStorage.getItem('username') && <CreateChatRoom/>
+        :  localStorage.getItem('username') ? <CreateChatRoom/>
+
+        : (
+          <div className='homeBackground'>
+            <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
+          </div>
+            )
         
         // : <>
         //     <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
         //   </>
         }
-        {resetPage === false && whichLoginPage === '' && (
-        <div className='homeBackground'>
-          <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
-        </div>
-          )}
+        {/* {resetPage === false && whichLoginPage === '' && } */}
         
         
       </div>

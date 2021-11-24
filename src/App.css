@@ -418,7 +418,7 @@ p {
   align-items: center;
 }
 .chatRoomName h2 {
-  
+  margin-left: 10px;
   
 }
 /* Profile Page */
@@ -430,22 +430,36 @@ p {
 }
 
 .avatarList {
+  margin: 0 auto;
+  width: 80%;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fill, 100px);
   grid-gap: 15px;
   
   box-sizing: border-box;
+  
  
 }
 .avatarList > * {
   aspect-ratio: 1;
-  
+ 
   width: 100%;
-  border: 2px solid black;
+  /* border: 2px solid black; */
 }
 
 .avatarList > *:hover {
   border: 2px solid white;
+}
+
+.profilePage {
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.profilePage button {
+  display:block;
+  text-align: center;
+  margin: 15px auto;
 }
 
 /* footer */
@@ -457,4 +471,64 @@ footer > p {
   margin: 0;
   padding: 0;
   padding-bottom: 5px;
+}
+
+
+
+/* media queries */
+
+@media (max-width: 740px) {
+  
+  .bodyContainer{
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  .messageBody, .messageBody2 {
+    width: 100%;
+  }
+  .sideBar{
+      display: none;
+    }
+}
+
+@media (max-width: 628px) {
+  .messageBody, .messageBody2{
+    /* max-width: calc(max(calc(100%-130px) , 400px)); */
+    max-width: 400px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+}
+
+
+@media (max-width: 550px) {
+  .messageBody{
+    max-width: 300px;
+    margin-left: 180px;
+  }
+
+  .messageBody::after, .messageBody::before {
+    left : -47%;
+  }
+
+  .profileImageContainer {
+    left: -32%;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+   .messageBody2 {
+     max-width: 90%;
+     width: 90%;
+
+   }
+   .messageBody {
+     margin-left: 130px;
+   }
 }
