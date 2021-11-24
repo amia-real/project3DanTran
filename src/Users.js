@@ -1,17 +1,19 @@
 import {useState} from 'react';
 import firebase from './firebase.js';
-// import { useAuth } from './AuthContext.js';
+
 
 const SignUp = (prop) => {
+    //state variable for all the information needed when saving the user data
     const [userEmail, setUserEmail] = useState('')
     const [userUsername, setUserUsername] = useState('')
     const [userPassword, setUserPassword] = useState('')
     const [userConfirmPassword, setUserConfirmPassword] = useState('')
-    // const [loading, setLoading] = useState(false)
+    
+    // variable for error handling
     const [error, setError] = useState('')
     const [currentUser, setCurrentUser] = useState(localStorage.getItem('username'))
-    // const {signup} = useAuth()
-
+    
+    // series of functions to handle typing on any of the inputs in the form
     const handleUsernameChange = (e) => {
         setUserUsername(e.target.value)
     }
@@ -26,7 +28,7 @@ const SignUp = (prop) => {
     const handleUserEmailChange = (e) => {
         setUserEmail(e.target.value)
     }
-
+    // function when the form is submitted
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -44,18 +46,19 @@ const SignUp = (prop) => {
        userObject.username = userUsername
        userObject.password = userPassword
        userObject.email = userEmail
+       userObject.avatar = 'makotoNijima'
 
        dbRef.push(userObject)
 
        localStorage.setItem("username", userObject.username)
        setCurrentUser(localStorage.getItem('username'))
-
+       console.log(currentUser)
+    
        return prop.setResetPage(true)
         
     }
     return(
         <>
-           <h1> You are currently logged in as {currentUser}  </h1>
            {error && <h1>{error}</h1>}
             <form action="" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>

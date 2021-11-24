@@ -24,18 +24,38 @@ img {
 }
 h1 {
   font-family: 'MyFont';
-  color: white;
+  color: black;
+  font-size: 40px;
+  margin: 0;
+  padding-top: 10px;
+}
+h2 {
+  padding: 0;
+  margin: 0;
+}
+.homeBackground {
+  background-image: url('assets/heroImage.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 90vh;
 }
 
 /* Nav Bar and Header styling */
 header {
-  background-color: red;
+  background-color: rgba(186,0,1,255);
+  height: 10vh;
+
 }
+
 .loginButtonContainer{
   display: flex;
   justify-content:flex-end;
   align-items: center;
 }
+
+
 
 header button {
   margin-right: 4px;
@@ -53,6 +73,7 @@ header button:hover {
 }
 
 nav {
+  height: 100%;
   display : flex;
   justify-content: space-between;
 }
@@ -60,6 +81,7 @@ nav {
 .bodyContainer {
   display: grid;
   grid-template-columns: 1fr 5fr;
+  grid-template-rows: 90vh;
 }
 /* Styling for sideBar */
 .sideBar {
@@ -74,8 +96,7 @@ nav {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  /* background-color: black;
-  color: white; */
+  
   
 }
 .sideBarText > ul {
@@ -83,6 +104,20 @@ nav {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+.sideBarText > i {
+  font-size: 45px;
+  margin : 10px auto;
+}
+.sideBarText form {
+  width: 100%;
+}
+.sideBarText form button {
+  border: 2px white solid;
+}
+.sideBarText input {
+  display: block;
+  margin: 0 auto;
 }
 
 .sideBarText button {
@@ -119,7 +154,8 @@ nav {
 
 
 body {
-  background-color: red;
+  background-color: rgba(186,0,1,255);
+
 }
 
 img {
@@ -138,11 +174,9 @@ img {
 }
 
 .frontPart {
-  /* clip-path: polygon(4% 27%, 7% 30%, 11% 29%, 16% 9%, 100% 0, 100% 100%, 4% 93%, 10% 36%, 7% 36%, 4% 32%, 0 32%); */
-
-  /* clip-path: polygon(0 26%, 3% 21%, 4% 25%, 6% 25%, 9% 8%, 100% 0, 100% 85%, 100% 100%, 2% 96%, 6% 31%, 4% 29%, 3% 26%); */
+  
   background-color: white;
-  /* height: 200px; */
+  
 
   clip-path: polygon(11% 6%, 100% 0%, 89% 99%, 0 85%);
   position: relative;
@@ -180,7 +214,7 @@ img {
   height: 80%;
   width: 90%;
   clip-path: polygon(12% 10%, 97% 4%, 86% 92%, 2% 80%);
-  /* clip-path: polygon(14% 10%, 97% 4%, 87% 100%, 2% 90%); */
+  
   position: relative;
   width:100%;
 
@@ -192,7 +226,7 @@ img {
   
 }
 p {
-  /* padding-left: 15%; */
+  
   padding: 6% 14% 8% 14%;
   margin: 0 auto;
   color: white;
@@ -205,7 +239,7 @@ p {
   max-width:471px;
   width:50%;
   margin-left: 130px;
-  /* margin: 0 auto; */
+  
   position: relative;
 }
 
@@ -239,7 +273,7 @@ p {
   width: 85px;
   position: absolute;
   left: -18%;
-  top:26px;
+  top:33px;
   height: 130px;
   z-index: 50;
   transform: skewY(-10deg);
@@ -249,7 +283,13 @@ p {
   margin-top : -18px;
 }
 
-
+.exclamationImg {
+  position: absolute;
+  width: 50px;
+  top: -20px;
+  right: 7%;
+  z-index: 999
+}
 
 
 
@@ -266,49 +306,8 @@ p {
   position: relative;
 }
 
-/* .messageBody2::before{
-  content: '';
-  height: 150px;
-  width: 50%;
-  background-color: white;
-  
-  clip-path: polygon(11% 12%, 100% 0, 73% 100%, 2% 83%);
-
-  position: absolute;
-  left: -46%;
-  top:16%;
-}
-
-.messageBody2::after {
-  content: '';
-  height: 150px;
-  width: 50%;
-  
-  
-  clip-path: polygon(14% 16%, 90% 16%, 72% 96%, 7% 79%);
 
 
-  position: absolute;
-  left: -46%;
-  top:16%;
-  background-color: teal;
-}
-
-.profileImageContainer2 {
-  width: 30%;
-  position: absolute;
-  left: -30%;
-  top:15%;
-  height: 130px;
-  z-index: 50;
-  transform: skewY(+10deg);
-}
-
-.profileImageContainer2 > img {
-  margin-top : -18px;
-} */
-
-/* might not need everything above ^^ */
 .messageContainer2::after {
   content: '';
   width: 50px;
@@ -318,7 +317,7 @@ p {
   right: 0%;
   top: 17px;
   z-index: 50;
-  /* clip-path: polygon(74% 25%, 100% 17%, 99% 52%, 46% 59%, 39% 30%, 0 42%, 57% 0); */
+  
   clip-path: polygon(26% 25%, 0% 17%, 1% 52%, 54% 59%, 61% 30%, 100% 42%, 43% 0);
 }
 
@@ -331,19 +330,14 @@ p {
   right: -3%;
   top: 7px;
   z-index: -1;
-  /* clip-path: polygon(74% 25%, 100% 17%, 100% 74%, 43% 77%, 37% 51%, 0 52%, 68% 0); */
   clip-path: polygon(26% 25%, 0 17%, 0 74%, 57% 77%, 63% 51%, 100% 52%, 32% 0);
 }
 
 
 .frontPart2 {
-  /* clip-path: polygon(4% 27%, 7% 30%, 11% 29%, 16% 9%, 100% 0, 100% 100%, 4% 93%, 10% 36%, 7% 36%, 4% 32%, 0 32%); */
-
-  /* clip-path: polygon(0 26%, 3% 21%, 4% 25%, 6% 25%, 9% 8%, 100% 0, 100% 85%, 100% 100%, 2% 96%, 6% 31%, 4% 29%, 3% 26%); */
+  
   background-color: black;
-  /* height: 200px; */
-
-  /* clip-path: polygon(11% 6%, 100% 0%, 89% 99%, 0 85%); */
+ 
   clip-path: polygon(89% 6%, 0 0, 11% 99%, 100% 85%);
   position: relative;
   width:100%;
@@ -355,8 +349,7 @@ p {
   height: 90%;
   width: 90%;
 
-  /* clip-path: polygon(14% 10%, 97% 4%, 87% 100%, 2% 90%); */
-  /* clip-path: polygon(86% 10%, 3% 4%, 13% 100%, 98% 90%); */
+  
   clip-path: polygon(88% 10%, 3% 4%, 14% 92%, 98% 80%);
   position: relative;
   width:100%;
@@ -389,16 +382,12 @@ p {
   scroll-behavior: smooth;
   overflow-y: scroll;
   height: 90%;
-  /* transform: rotate(180deg); */
+  
 }
 
 .extraWrapper {
   height: 85vh;
-  /* overflow:auto; 
-  display:flex; 
-  flex-direction:column-reverse; */
-  /* transform: rotate(180deg)
- */
+  
 }
 /* send message box */
 .sendMessage {
@@ -431,6 +420,32 @@ p {
 .chatRoomName h2 {
   
   
+}
+/* Profile Page */
+
+.currentAvatarContainer {
+  border: 4px solid black;
+  width: 150px;
+  margin: 0 auto;
+}
+
+.avatarList {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 15px;
+  
+  box-sizing: border-box;
+ 
+}
+.avatarList > * {
+  aspect-ratio: 1;
+  
+  width: 100%;
+  border: 2px solid black;
+}
+
+.avatarList > *:hover {
+  border: 2px solid white;
 }
 
 /* footer */

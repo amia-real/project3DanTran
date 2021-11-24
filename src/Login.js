@@ -4,7 +4,7 @@ import firebase from './firebase.js';
 const Login = (prop) => {
     const [userUsername, setUserUsername] = useState('')
     const [userPassword, setUserPassword] = useState('')
-    // const [loading, setLoading] = useState(false)
+    
     const [error, setError] = useState('')
     const [currentUser, setCurrentUser] = useState(localStorage.getItem('username'))
 

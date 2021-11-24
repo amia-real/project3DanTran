@@ -5,11 +5,16 @@ import CreateChatRoom from './ChatRoom.js';
 import SignUp from './Users.js';
 import Login from './Login.js';
 
-// New ERROR : find a way to rerender the page when someone logs in or creates a user so they can display the good stuff.
+
 
 function App() {
+    // state variable to send to child components 
     const [resetPage, setResetPage] = useState(false)
+
+    //State variable to control if showing login or sign up page
     const [whichLoginPage, setWhichLoginPage] = useState('')
+    
+    // function to handle log-out onclick event
     const handleLogOut = (e) => {
       e.preventDefault()
       localStorage.removeItem('username')
@@ -17,23 +22,17 @@ function App() {
       setWhichLoginPage('')
     }
     
-    // const pleaseAllowParentToReRender = () => {
-    //   setResetPage('plz')
-    // }
-    // useEffect(() => {
-
-    // })
-
+    // function to handle log-in onclick event
     const handleLogIn = (e) => {
       e.preventDefault()
       setWhichLoginPage('Log In Page')
     }
+    // function to handle signup onclick event
     const handleSignIn = (e) => {
       e.preventDefault()
       setWhichLoginPage('Sign In Page')
     }
-        
-       
+    
    
     return (
       
@@ -41,7 +40,7 @@ function App() {
 
         <header>
             <nav>
-              <h1>Persona Messenger</h1>
+              <h1>PERSONA MESSENGER</h1>
               {!localStorage.getItem('username')
               ? <div className='loginButtonContainer'>
                 <button onClick={handleLogIn}>Log In</button>
@@ -54,33 +53,26 @@ function App() {
               }
             </nav>
         </header>
+        
         {!localStorage.getItem('username') && whichLoginPage === 'Log In Page'
         ? <Login setResetPage = {setResetPage}/>
            
         
         : !localStorage.getItem('username') && whichLoginPage === 'Sign In Page'
         ? <SignUp setResetPage = {setResetPage}/>
-        : null
-        // localStorage.getItem('username')
+        : localStorage.getItem('username') && <CreateChatRoom/>
         
         // : <>
         //     <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
         //   </>
         }
-        {resetPage === false && whichLoginPage === '' && (<h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>)}
+        {resetPage === false && whichLoginPage === '' && (
+        <div className='homeBackground'>
+          <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
+        </div>
+          )}
         
-        {resetPage === true && <CreateChatRoom/> }
         
-        {/* <SignUp/>
-  
-        <h2>Break to delineate</h2>
-  
-        <Login/>
-        <h2>Another BREAK</h2> */}
-        {/* <header>
-          <button onClick={handleLogOut}>Log Out</button>
-        </header>
-        <CreateChatRoom/> */}
       </div>
     );
 

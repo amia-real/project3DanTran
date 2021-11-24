@@ -2,33 +2,36 @@
 
 import { useState, useEffect, useRef } from 'react';
 import firebase from './firebase.js';
+import exclamation from './assets/exclamation.png'
+import question from './assets/questionMark.png'
+import question2 from './assets/questionMark2.png'
 
 const MessageBox = function (prop) {
-    // just the message itself
+    
     const currentUser = localStorage.getItem('username');
+
+    //state for user message
     const [userMessage, setUserMessage] = useState('')
     const messagesEndRef = useRef(null)
 
 
-    // for the whole message object
-    // const [userMessageObject, setUserMessageObject] = useState({})
-
+    // state variable to store the messages from db that need to be rendered on the page
     const [renderMessages, setRenderMessages] = useState([])
 
+    // allows us to type in the message send input form
     const handleChange = (event) => {
         setUserMessage(event.target.value)
     }
-
+    // controls the submission of the input form
     const handleSubmit = (event) => {
         event.preventDefault()
 
         const dbRef = firebase.database().ref(`chatrooms/${prop.chatRoom}`)
-        // right now we are saving only the message, but I would like to also save
-        // the chat room we are in, the user who submitted the message and the date
+
         console.log(dbRef)
-        // console.log(firebase.database().ref('yohoho'))
+        
         const messageObject = {}
-        // will find away to get the user data later for now I set as Bob
+        
         messageObject.user = localStorage.getItem('username')
 
         // grabbing information for the date
@@ -77,7 +80,7 @@ const MessageBox = function (prop) {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     
     }
-
+    //allows you to see the latest message first
     useEffect (() => {
         scrollToBottom()
     },[renderMessages])
@@ -85,6 +88,7 @@ const MessageBox = function (prop) {
 
     return (
         <div className = 'extraWrapper'>
+            
             <div className='chatRoomName'>
                 <h2> {prop.chatRoom.toUpperCase()} </h2>
             </div>
@@ -110,11 +114,16 @@ const MessageBox = function (prop) {
 
                                 : (     <div key = {message.key} className="messageBody">
                                             <div className='profileImageContainer'>
-                                                <img src={"./assets/profilePictures/igor.png"} alt=""/>
+                                                {/* <img src={testImage} alt=""/> */}
+
+                                                <img src={require(`./assets/profilePicturesv2/annTakamaki.png`).default} alt="" />
                                                 
                                                 
                                             </div>
                                             <div className='messageContainer'>
+                                                {message.message.includes('!') && !message.message.includes('?') && <img className='exclamationImg' src={exclamation} alt="" />}
+                                                {message.message.includes('?') && !message.message.includes('!') && <img className='exclamationImg' src={question} alt=''/>}
+                                                {message.message.includes('?') && message.message.includes('!') && <img className='exclamationImg' src={question2} alt=''/>}
                                                 <div className='frontPart'>
                                                     <div className="insideFrontPart">
                                                         <p> {message.message}</p>
