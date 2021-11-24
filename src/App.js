@@ -21,6 +21,8 @@ function App() {
       setResetPage(false)
       setWhichLoginPage('')
 
+      // I need to call resetPage to be able to deploy on netlify, but I have no real use for it (only need the setter function) so i will console log it instead
+      console.log(resetPage)
     }
     
     // function to handle log-in onclick event

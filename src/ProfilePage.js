@@ -5,7 +5,7 @@ import firebase from './firebase.js';
 
 const ProfilePage = () => {
 
-    const currentUser = localStorage.getItem('username');
+    
     const [userFromDB, setUserFromDB] = useState({});
     const [currentAvatar, setCurrentAvatar] = useState('annTakamaki');
     const [arrayOfAvatars, setArrayOfAvatars] = useState([]);
@@ -14,7 +14,7 @@ const ProfilePage = () => {
     useEffect (() => {
         const dbRef = firebase.database().ref('Users')
         const dbRef2= firebase.database().ref('Avatars')
-    
+        const currentUser = localStorage.getItem('username');
         dbRef.on('value', (response) => {
             console.log(response.val())
 
@@ -29,7 +29,7 @@ const ProfilePage = () => {
 
                     
                     
-
+                    
                     // grab object with user and set it in state variable
                     console.log(data[user])
 
@@ -56,6 +56,8 @@ const ProfilePage = () => {
             for (let avatar in data) {
                 newArray.push({key: avatar,
                     avatar: data[avatar]})
+
+                
             }
             
             setArrayOfAvatars(newArray)
