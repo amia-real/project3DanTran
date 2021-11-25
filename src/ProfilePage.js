@@ -16,14 +16,13 @@ const ProfilePage = () => {
         const dbRef2= firebase.database().ref('Avatars')
         const currentUser = localStorage.getItem('username');
         dbRef.on('value', (response) => {
-            console.log(response.val())
+            
 
             const data = response.val()
 
             for (let user in data) {
                 
-                console.log(data[user].username)
-                console.log(currentUser)
+                
                 if (data[user].username === currentUser ){
                     
 
@@ -31,7 +30,6 @@ const ProfilePage = () => {
                     
                     
                     // grab object with user and set it in state variable
-                    console.log(data[user])
 
                     const newObj = {
                         ...data[user],
@@ -49,7 +47,7 @@ const ProfilePage = () => {
                 }
             }
         })
-
+        // grabs a list of all the avatars from our db
         dbRef2.on('value', (response) => {
             const data = response.val()
             const newArray = []
@@ -64,15 +62,15 @@ const ProfilePage = () => {
             
         })
     }, [])
-
+    // function when an avatar image is clicked on in the grid
     const handleImgClick = (avatar) => {
-        console.log(avatar)
+        
         setCurrentAvatar(avatar)
     }
-
+    // updates the avatar to firebase once saved
     const handleUpdateAvatar = (updatedAvatar) => {
         
-        console.log(updatedAvatar)
+        
         firebase.database().ref(`Users/${userFromDB.id}`).update({avatar: updatedAvatar})
 
         
@@ -84,7 +82,7 @@ const ProfilePage = () => {
                 <div className='currentAvatarContainer'>
                     <img src={require(`./assets/profilePicturesv2/${currentAvatar}.png`).default} alt={currentAvatar} />
                 </div>
-                <button onClick={() => handleUpdateAvatar(currentAvatar)}>Save Your Avatar Picture</button>
+                <button className='messageButton' onClick={() => handleUpdateAvatar(currentAvatar)}>Save Your Avatar Picture</button>
 
                 <div className='avatarList'>
                     {arrayOfAvatars.map(array => {

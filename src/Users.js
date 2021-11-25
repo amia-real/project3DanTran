@@ -52,6 +52,8 @@ const SignUp = (prop) => {
 
        localStorage.setItem("username", userObject.username)
        setCurrentUser(localStorage.getItem('username'))
+       
+       // have to console.log currentUser so it is used or else netlify wont let me upload it. (i only needed the setter function)
        console.log(currentUser)
     
        return prop.setResetPage(true)
@@ -59,8 +61,9 @@ const SignUp = (prop) => {
     }
     return(
         <>
+            <div className='bodyFrontContainer homeBackground'>
            {error && <h1>{error}</h1>}
-            <form action="" onSubmit={handleSubmit}>
+            <form className='loginForm' action="" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
                 <input required id='email' type="email" value={userEmail} onChange={handleUserEmailChange} />
                 <label htmlFor="username">Username</label>
@@ -71,6 +74,7 @@ const SignUp = (prop) => {
                 <input required id='confirmPassword' type='password' value={userConfirmPassword} onChange={handleConfirmPasswordChange}/>
                 <button>Sign Up</button>
             </form>
+            </div>
         </>
     )
 }

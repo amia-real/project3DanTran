@@ -66,17 +66,17 @@ function App() {
         :  localStorage.getItem('username') ? <CreateChatRoom/>
 
         : (
-          <div className='homeBackground'>
-            <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
+          <div className='homeBackground bodyFrontContainer'>
+            <div className='textContainerIntro'>
+            <h2>Welcome To <span>PERSONA MESSENGER </span> Please Login or Sign up to use the Application!</h2>
+            </div>
           </div>
             )
         
-        // : <>
-        //     <h2>Welcome To persona Messenger. Please Login or Sign up to use the Application!</h2>
-        //   </>
-        }
-        {/* {resetPage === false && whichLoginPage === '' && } */}
         
+        }
+        
+      
         
       </div>
     );

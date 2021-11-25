@@ -20,6 +20,9 @@ const CreateChatRoom = () => {
     //state variable to remember what chat room is selected
     const [selectedChatRoom, setSelectedChatRoom] = useState('general')
 
+    //error handling
+    const [error, setError] = useState('')
+
     // function to allow us to type in the create chat room input form
     const handleChangeChatRoom = (event) => {
         setUserMessageChatRoom(event.target.value)
@@ -30,19 +33,21 @@ const CreateChatRoom = () => {
         // go into database
         const dbRef = firebase.database().ref('listOfChatRooms')
 
+        setError('')
+
         dbRef.on('value', (response) => {
-            console.log(response.val())
+            
             const data = response.val()
 
             for (let chatRoomName in data) {
-                console.log(data[chatRoomName])
+                
                 // make sure the inputted chat room name doesn't already exist
                 if(userMessageChatRoom.toLowerCase().trim() === data[chatRoomName].toLowerCase().trim() ) {
 
-                    // need to add error handling right here !!!!!!!
-                    console.log('This chat room already exists')
+                    
+                    
                     setUserMessageChatRoom('')
-                    return
+                    return setError('This chat room already exists')
                 }
             }
             // add chat room to database
@@ -84,14 +89,14 @@ const CreateChatRoom = () => {
 
     // function to change the chat room on click
     const changeChatRoom = (stuff) => {
-        console.log('hi')
-        console.log(stuff.nameOfChatRoom)
+        
         setSelectedChatRoom(stuff.nameOfChatRoom)
         setAvatarPage(false)
     }
 
     // function to show chat room creation form on click
     const handleSubmitShowChatRoom = () => {
+        setError('')
         setShowChatRoom(!showChatRoom)
     }
     
@@ -106,13 +111,14 @@ const CreateChatRoom = () => {
         <div className='bodyContainer'>
             <section className='sideBar'>
                 <div className='sideBarText'>
-                    <i  onClick={handleAvatarClick} className="fas fa-user-circle"></i>
+                    <i  aria-label='default avatar icon' onClick={handleAvatarClick} className="fas fa-user-circle"></i>
                     <div className="addingChatRooms" onClick = {handleSubmitShowChatRoom}>
                         <h2>CHAT ROOMS</h2>
-                        {showChatRoom === false ?<i className="fas fa-plus"></i> : <i className="fas fa-minus"></i>}
+                        {showChatRoom === false ?<i aria-label='plus sign' className="fas fa-plus"></i> : <i aria-label='minus sign' className="fas fa-minus"></i>}
                     </div>
                         {showChatRoom === true
                         ? <>
+                        {error && <h4>{error}</h4>}
                         <form action="" onSubmit={handleSubmitChatRoom}>
                             <label className='sr-only' htmlFor="newMessage">Create a new chatRoom</label>
                             <input id='newMessage' type="text" value={userMessageChatRoom} onChange={handleChangeChatRoom} />
@@ -127,7 +133,7 @@ const CreateChatRoom = () => {
                             chatRooms.map((chatRoom) => {
                                 return(
                                     <li key={chatRoom.key}>
-                                        {/* <p>{chatRoom.nameOfChatRoom}</p> */}
+                                        
                                         <button onClick={() => {changeChatRoom(chatRoom)}}>{chatRoom.nameOfChatRoom.toUpperCase()}</button>
                                     </li>
                                 )

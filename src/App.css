@@ -28,11 +28,16 @@ h1 {
   font-size: 40px;
   margin: 0;
   padding-top: 10px;
+  margin-left: 8px;
 }
 h2 {
   padding: 0;
   margin: 0;
 }
+h4 {
+  color: red;
+}
+
 .homeBackground {
   background-image: url('assets/heroImage.jpg');
   background-repeat: no-repeat;
@@ -41,6 +46,7 @@ h2 {
   width: 100%;
   height: 90vh;
 }
+
 
 /* Nav Bar and Header styling */
 header {
@@ -76,6 +82,61 @@ nav {
   height: 100%;
   display : flex;
   justify-content: space-between;
+}
+
+/* Styling for Login Page */
+.bodyFrontContainer {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginForm, .textContainerIntro{
+  width: calc(max(40% , 450px));
+  height: 80%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 6px black solid;
+  background-color: rgba(218, 223, 225, 0.6 )
+}
+.loginForm > * {
+  width: 80%;
+  text-align: center;
+}
+.loginForm label {
+  font-size: 20px;
+  margin: 20px 0px;
+  font-weight: bold;
+}
+
+.loginForm button {
+  margin-top: 40px;
+  width: 60%;
+  height: 45px;
+  background-color: black;
+  color: white;
+  font-size: 20;
+  font-weight: bold;
+  border: 2px solid white;
+  transition: all linear 0.4s;
+}
+
+.loginForm button:hover {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+}
+
+.textContainerIntro h2 {
+  line-height: 40px;
+  width: 80%;
+  text-align: center;
+}
+.textContainerIntro span {
+  font-weight: bold;
+  color: rgba(186,0,1,255);
 }
 /* styling for whole body */
 .bodyContainer {
@@ -163,7 +224,14 @@ img {
 }
 
 
-
+.startImageContainer{
+  width: 60%;
+  margin: 0 auto;
+}
+.messageContainerFull > h2 {
+  width: 100%;
+  text-align: center;
+}
 
 /* first side */
 .messageContainer, .messageContainer2 {
@@ -230,7 +298,7 @@ p {
   padding: 6% 14% 8% 14%;
   margin: 0 auto;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 
@@ -277,6 +345,18 @@ p {
   height: 130px;
   z-index: 50;
   transform: skewY(-10deg);
+  /* position: relative; */
+}
+.profileImageContainer .nameCard {
+  background-color: white;
+  height: 25px;
+  width: 100%;
+  position: absolute;
+  bottom: 27%;
+  left:9px;
+  color:black;
+  text-align: center;
+  padding: 0;
 }
 
 .profileImageContainer > img {
@@ -291,7 +371,19 @@ p {
   z-index: 999
 }
 
-
+.dateAndTime {
+  position: absolute;
+  text-align: center;
+  top: -21px;
+  left:55px;
+  height: 25px;
+  width: 55%;
+  color:black;
+  background-color: white;
+  z-index: 100;
+  transform: skewY(-1deg);
+  clip-path: polygon(0 100%, 14% 0, 100% 0, 86% 100% );
+}
 
 
 
@@ -304,6 +396,19 @@ p {
   
   
   position: relative;
+}
+.dateAndTime2 {
+  position: absolute;
+  text-align: center;
+  top: -18px;
+  right:55px;
+  height: 25px;
+  width: 55%;
+  color:white;
+  background-color: black;
+  z-index: 100;
+  transform: skewY(+1deg);
+  clip-path: polygon(100% 100%, 86% 0, 0 0, 14% 100% );
 }
 
 
@@ -364,7 +469,7 @@ p {
 .insideFrontPart2 p {
   margin: 0 auto;
   color: black;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 
@@ -372,10 +477,12 @@ p {
 .messageBody2 {
   margin-left: auto;
   margin-right: 25px;
+  margin-top: 20px
 }
 
 .messageBody {
   margin-right: auto;
+  margin-top: 20px;
 }
 
 .messageContainerFull {
@@ -406,6 +513,17 @@ p {
   white-space: initial;
 }
 
+.messageButton {
+  background-color: black;
+  color: white;
+  border: 2px black solid;
+}
+
+.messageButton:hover {
+  background-color: white;
+  border: 2px white solid;
+  color: black;
+}
 
 /*  */
 .chatRoomName {
@@ -427,6 +545,9 @@ p {
   border: 4px solid black;
   width: 150px;
   margin: 0 auto;
+}
+.currentAvatarContainer img {
+  display: block;
 }
 
 .avatarList {
@@ -486,9 +607,30 @@ footer > p {
   .messageBody, .messageBody2 {
     width: 100%;
   }
-  .sideBar{
-      display: none;
-    }
+  .sideBar {
+    position: fixed;
+    left: -205px;
+    transition: 0.3s;
+    z-index: 999999999999;
+    text-decoration: none;
+    border-radius: 0 5px 5px 0;
+    height: 90vh;
+    opacity: .95;
+
+  }
+
+  .sideBar::after {
+    content: ''; position: absolute;
+    width: 0; height: 0; right: -60px; top: 15px;
+    border-top: 30px solid transparent;
+    border-left: 60px solid black;
+    border-bottom: 30px solid transparent;
+    opacity: 1;
+  }
+
+  .sideBar:hover {
+    left: 0;
+}
 }
 
 @media (max-width: 628px) {
@@ -519,6 +661,19 @@ footer > p {
 
   h1 {
     font-size: 25px;
+  }
+
+  .messageContainer::after{
+    width: 40px;
+    height: 40px;
+    left: -3%;
+    top: 12px;
+  }
+  .messageContainer::before {
+    width: 50px;
+    height: 50px;
+    left: -4%;
+    top: 3px;
   }
 }
 

@@ -28,7 +28,7 @@ const MessageBox = function (prop) {
 
         const dbRef = firebase.database().ref(`chatrooms/${prop.chatRoom}`)
 
-        console.log(dbRef)
+        
         
         const messageObject = {}
         
@@ -36,14 +36,14 @@ const MessageBox = function (prop) {
 
         // grabbing information for the date
         const d = new Date()
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        messageObject.time = d.getTime()
+        // const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        // messageObject.time = d.getTime()
 
-        messageObject.day = days[d.getDay()]
         messageObject.date = d.getDate()
         messageObject.year = d.getFullYear()
-        messageObject.month = months[d.getMonth()]
+        messageObject.month = d.getMonth() + 1
+        messageObject.timeAndDate = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'});
 
         // finally, grab their message
         messageObject.message = userMessage
@@ -55,11 +55,13 @@ const MessageBox = function (prop) {
     }
    
     useEffect(() => {
+        // reference 2 different parts of the fire base database
         const dbRef = firebase.database().ref(`chatrooms/${prop.chatRoom}`)
         const dbRef2 = firebase.database().ref('Users')
 
+        // grab the user object in the database and store each user and their avatar to an array
         dbRef2.on('value', (response) => {
-            console.log(response.val())
+            
 
             const data = response.val()
             const newArray = []
@@ -72,11 +74,12 @@ const MessageBox = function (prop) {
                 newArray.push(newObj)
                 
             }
+            // do another call of the database inside the first one to grab the list of messages pertaining to the selected chatroom
             dbRef.on('value', (response) => {
-                console.log(response.val())
+                
                 const messageHistory = []
                 const data = response.val()
-    
+                // nested forloop between the 2 arrays to add the avatar to each message object that corresponds to the person who wrote the message
                 for (let message in data) {
                     for (let i = 0; i < newArray.length; i++){
                         if (data[message].user === newArray[i].user){
@@ -84,8 +87,7 @@ const MessageBox = function (prop) {
                         }
                     }
                     data[message].key = message
-                    console.log(message)
-                    console.log(data[message])
+                    
                     messageHistory.push(data[message])
                 }
                 setRenderMessages(messageHistory)
@@ -94,28 +96,7 @@ const MessageBox = function (prop) {
         })
             
     }, [prop.chatRoom])
-    // I want to display all of the chat logs belonging to a certain chat room
-    // useEffect(() => {
-    //     const dbRef = firebase.database().ref(`chatrooms/${prop.chatRoom}`)
-
-    //     console.log(allUsers)
-
-    //     dbRef.on('value', (response) => {
-    //         console.log(response.val())
-    //         const messageHistory = []
-    //         const data = response.val()
-
-    //         for (let message in data) {
-    //             data[message].key = message
-    //             console.log(message)
-    //             console.log(data[message])
-    //             messageHistory.push(data[message])
-    //         }
-    //         setRenderMessages(messageHistory)
-    //     })
-
-
-    // }, [prop.chatRoom])
+    
 
 
     const scrollToBottom = () => {
@@ -137,7 +118,10 @@ const MessageBox = function (prop) {
                 <h2> {prop.chatRoom.toUpperCase()} </h2>
             </div>
             <div className='messageContainerFull'>
-                
+                <div className='startImageContainer'>
+                    <img src={require(`./assets/jokerStart.png`).default} alt="Joker from persona5" />
+                </div>
+                <h2>THIS IS BUT THE START OF THE CONVERSATION. TYPE SOMETHING!</h2>
                     {
                         renderMessages.map((message) => {
                             // findAvatarForImage(message.user)
@@ -146,10 +130,11 @@ const MessageBox = function (prop) {
                                 
                                 <div key={message.key} className='messageBody2'>                                  
                                     <div className='messageContainer2'>
+                                        <div className='dateAndTime2'> {message.timeAndDate} - {message.month}/{message.date}/{message.year}</div>
                                         <div className='frontPart2'>
                                             <div className="insideFrontPart2"> 
                                                 <p> {message.message}</p>
-                                                <p>{message.day}, {message.month} {message.date}th, {message.year}</p>
+                                                {/* <p>{message.day}, {message.month} {message.date}th, {message.year}</p> */}
                                             </div>
                                         </div>
                                     </div>                                      
@@ -159,7 +144,7 @@ const MessageBox = function (prop) {
                                 : (     <div key = {message.key} className="messageBody">
                                             <div className='profileImageContainer'>
                                                 
-
+                                                <p className='nameCard'>{message.user}</p>
                                                 <img src={require(`./assets/profilePicturesv2/${message.avatar}.png`).default} alt="" />
                                                 
                                                 
@@ -168,10 +153,13 @@ const MessageBox = function (prop) {
                                                 {message.message.includes('!') && !message.message.includes('?') && <img className='exclamationImg' src={exclamation} alt="" />}
                                                 {message.message.includes('?') && !message.message.includes('!') && <img className='exclamationImg' src={question} alt=''/>}
                                                 {message.message.includes('?') && message.message.includes('!') && <img className='exclamationImg' src={question2} alt=''/>}
+                                                
+                                                <div className='dateAndTime'> {message.timeAndDate} - {message.month}/{message.date}/{message.year}</div>
                                                 <div className='frontPart'>
+                                                    
                                                     <div className="insideFrontPart">
                                                         <p> {message.message}</p>
-                                                        <p>{message.day}, {message.month} {message.date}th, {message.year}</p>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,10 +169,10 @@ const MessageBox = function (prop) {
                     }
                 <div ref={messagesEndRef}></div>
             </div>
-                <form className= 'sendMessage'action="" onSubmit={handleSubmit}>
+                <form className='sendMessage' action="" onSubmit={handleSubmit}>
                     <label className='sr-only' htmlFor="newMessage">Send a new Message</label>
                     <input id='newMessage' type="text" value={userMessage} onChange={handleChange} required />
-                    <button>Send Message</button>
+                    <button className='messageButton'>Send Message</button>
                 </form>
         </div>
     )
